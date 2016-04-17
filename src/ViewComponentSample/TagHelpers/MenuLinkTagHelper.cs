@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Razor.TagHelpers;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 
 namespace ViewComponentSample.TagHelpers
 {
-    [TargetElement("menulink", Attributes = "controller-name, action-name, menu-text, menu-id")]
+    [HtmlTargetElement("menulink", Attributes = "controller-name, action-name, menu-text, menu-id")]
     public class MenuLinkTagHelper : TagHelper
     {
         public string ControllerName { get; set; }
@@ -44,8 +46,6 @@ namespace ViewComponentSample.TagHelpers
 
             if (subMenus.Count > 0)
             {
-                StringBuilder sb = new StringBuilder();
-
                 string subMenuClass = "";
 
                 var caretSpan = new TagBuilder("span");
@@ -55,7 +55,8 @@ namespace ViewComponentSample.TagHelpers
                 dropdownMenu.MergeAttribute("href", "#");
                 dropdownMenu.AddCssClass("dropdown-toggle");
                 dropdownMenu.MergeAttribute("data-toggle", "dropdown");
-                dropdownMenu.InnerHtml = MenuText + " " + caretSpan.ToHtmlString(TagRenderMode.SelfClosing);
+                dropdownMenu.InnerHtml.Append(MenuText);
+                dropdownMenu.InnerHtml.Append(caretSpan);
 
                 var ul = new TagBuilder("ul");
                 ul.AddCssClass("dropdown-menu");
@@ -69,15 +70,13 @@ namespace ViewComponentSample.TagHelpers
                     var a = new TagBuilder("a");
                     a.MergeAttribute("href", $"{subMenuUrl}");
                     a.MergeAttribute("title", subMenu.MenuItemText);
-                    a.InnerHtml = subMenu.MenuItemText;
+                    a.InnerHtml.Append(subMenu.MenuItemText);
 
-                    li.InnerHtml = a.ToString();
+                    li.InnerHtml.Append(a);
 
-                    sb.AppendLine(li.ToString());
+                    ul.InnerHtml.Append(li);                    
                 }
-
-                ul.InnerHtml = sb.ToString();
-
+                
                 if (subMenus.Any(s => s.ActionName == currentAction.ToString()) && subMenus.Any(s => s.ControllerName == currentController.ToString()))
                 {
                     subMenuClass = "dropdown active";
@@ -89,7 +88,8 @@ namespace ViewComponentSample.TagHelpers
 
                 output.Attributes.Add("class", subMenuClass);
 
-                output.Content.SetContent(dropdownMenu.ToString() + ul.ToString());
+                output.Content.Append(dropdownMenu);
+                output.Content.Append(ul);
 
             }
             else
@@ -99,7 +99,7 @@ namespace ViewComponentSample.TagHelpers
                 var a = new TagBuilder("a");
                 a.MergeAttribute("href", $"{menuUrl}");
                 a.MergeAttribute("title", MenuText);
-                a.InnerHtml = MenuText;
+                a.InnerHtml.Append(MenuText);
 
                 if (String.Equals(ActionName, currentAction as string, StringComparison.OrdinalIgnoreCase)
                    && String.Equals(ControllerName, currentController as string, StringComparison.OrdinalIgnoreCase))
@@ -107,7 +107,7 @@ namespace ViewComponentSample.TagHelpers
                     output.Attributes.Add("class", "active");
                 }
 
-                output.Content.SetContent(a.ToString());
+                output.Content.Append(a);
             }
         }
     }
