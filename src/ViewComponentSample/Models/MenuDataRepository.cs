@@ -11,7 +11,7 @@ namespace ViewComponentSample.Models
 
         public MenuDataRepository()
         {
-            
+
         }
 
         public Task<MenuItemListModel> GetMenus()

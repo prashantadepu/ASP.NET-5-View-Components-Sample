@@ -4,7 +4,7 @@
     <ul class="nav navbar-nav">
 
         @foreach (ViewComponentSample.Models.MenuItemModel menuItem in Model.MenuItems.Where(m => m.ParentId == 0).ToList())
-        {               
+        {
             <menulink controller-name="@menuItem.ControllerName" action-name="@menuItem.ActionName" menu-text="@menuItem.MenuItemText" menu-id="@menuItem.Id"></menulink>
         }
     </ul>

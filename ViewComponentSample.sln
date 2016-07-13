@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FE0F94B7-5A2F-4E0E-8C45-0E334901F294}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F180D401-4189-4B43-81A3-9A1B76B2963D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5772B2E4-49EC-461E-B640-9F2A556EFD54}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6B588CF4-4AE0-4F50-B91E-97EC172DD55B}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ViewComponentSample", "src\ViewComponentSample\ViewComponentSample.xproj", "{0403F77F-1192-497F-9B1B-3E4E41E04136}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ViewComponentSample", "src\ViewComponentSample\ViewComponentSample.xproj", "{E67DD83F-3195-45D1-BA36-9AAEB6EA5FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,15 +18,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0403F77F-1192-497F-9B1B-3E4E41E04136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0403F77F-1192-497F-9B1B-3E4E41E04136}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0403F77F-1192-497F-9B1B-3E4E41E04136}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0403F77F-1192-497F-9B1B-3E4E41E04136}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E67DD83F-3195-45D1-BA36-9AAEB6EA5FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E67DD83F-3195-45D1-BA36-9AAEB6EA5FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E67DD83F-3195-45D1-BA36-9AAEB6EA5FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E67DD83F-3195-45D1-BA36-9AAEB6EA5FB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0403F77F-1192-497F-9B1B-3E4E41E04136} = {FE0F94B7-5A2F-4E0E-8C45-0E334901F294}
+		{E67DD83F-3195-45D1-BA36-9AAEB6EA5FB9} = {F180D401-4189-4B43-81A3-9A1B76B2963D}
 	EndGlobalSection
 EndGlobal

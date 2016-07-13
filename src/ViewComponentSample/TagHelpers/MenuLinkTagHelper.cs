@@ -1,14 +1,13 @@
-﻿using ViewComponentSample.Models;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Razor.Runtime.TagHelpers;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Razor.TagHelpers;
-using Microsoft.AspNet.Mvc.ViewFeatures;
+using ViewComponentSample.Models;
 
 namespace ViewComponentSample.TagHelpers
 {
@@ -20,15 +19,15 @@ namespace ViewComponentSample.TagHelpers
 
         public string MenuText { get; set; }
         public int MenuId { get; set; }
-        
-        public MenuDataRepository _navigationMenu { get; set; }
-                
-        [ViewContext]
-        public ViewContext ViewContext { get; set; }               
-        
-        public IUrlHelper _urlHelper { get; set; }
 
-        public MenuLinkTagHelper(MenuDataRepository navigationMenu, IUrlHelper urlHelper)
+        public MenuDataRepository _navigationMenu { get; set; }
+
+        [ViewContext]
+        public ViewContext ViewContext { get; set; }
+
+        public IUrlHelperFactory _urlHelper { get; set; }
+
+        public MenuLinkTagHelper(MenuDataRepository navigationMenu, IUrlHelperFactory urlHelper)
         {
             _navigationMenu = navigationMenu;
             _urlHelper = urlHelper;
@@ -56,7 +55,7 @@ namespace ViewComponentSample.TagHelpers
                 dropdownMenu.AddCssClass("dropdown-toggle");
                 dropdownMenu.MergeAttribute("data-toggle", "dropdown");
                 dropdownMenu.InnerHtml.Append(MenuText);
-                dropdownMenu.InnerHtml.Append(caretSpan);
+                dropdownMenu.InnerHtml.AppendHtml(caretSpan);
 
                 var ul = new TagBuilder("ul");
                 ul.AddCssClass("dropdown-menu");
@@ -65,18 +64,20 @@ namespace ViewComponentSample.TagHelpers
                 {
                     var li = new TagBuilder("li");
 
-                    string subMenuUrl = _urlHelper.Action(subMenu.ActionName, subMenu.ControllerName);
+                    var urlHelper = _urlHelper.GetUrlHelper(ViewContext);
+
+                    string subMenuUrl = urlHelper.Action(subMenu.ActionName, subMenu.ControllerName);
 
                     var a = new TagBuilder("a");
                     a.MergeAttribute("href", $"{subMenuUrl}");
                     a.MergeAttribute("title", subMenu.MenuItemText);
                     a.InnerHtml.Append(subMenu.MenuItemText);
 
-                    li.InnerHtml.Append(a);
+                    li.InnerHtml.AppendHtml(a);
 
-                    ul.InnerHtml.Append(li);                    
+                    ul.InnerHtml.AppendHtml(li);
                 }
-                
+
                 if (subMenus.Any(s => s.ActionName == currentAction.ToString()) && subMenus.Any(s => s.ControllerName == currentController.ToString()))
                 {
                     subMenuClass = "dropdown active";
@@ -88,13 +89,15 @@ namespace ViewComponentSample.TagHelpers
 
                 output.Attributes.Add("class", subMenuClass);
 
-                output.Content.Append(dropdownMenu);
-                output.Content.Append(ul);
+                output.Content.AppendHtml(dropdownMenu);
+                output.Content.AppendHtml(ul);
 
             }
             else
             {
-                string menuUrl = _urlHelper.Action(ActionName, ControllerName);
+                var urlHelper = _urlHelper.GetUrlHelper(ViewContext);
+
+                string menuUrl = urlHelper.Action(ActionName, ControllerName);
 
                 var a = new TagBuilder("a");
                 a.MergeAttribute("href", $"{menuUrl}");
@@ -107,7 +110,7 @@ namespace ViewComponentSample.TagHelpers
                     output.Attributes.Add("class", "active");
                 }
 
-                output.Content.Append(a);
+                output.Content.AppendHtml(a);
             }
         }
     }

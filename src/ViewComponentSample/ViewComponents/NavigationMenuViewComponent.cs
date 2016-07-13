@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ViewComponentSample.Models;
 
 namespace ViewComponentSample.ViewComponents
-{    
+{
     public class NavigationMenuViewComponent : ViewComponent
     {
         MenuDataRepository _menuDataRepository;
